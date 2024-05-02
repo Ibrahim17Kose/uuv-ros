@@ -7,4 +7,4 @@ Kd: [15187, 15187, 15187, 3878, 3878, 3878]
 acc_fb_gain: 0
 
 lower_limit: -5000
-upper_limiy: 5000
+upper_limit: 5000

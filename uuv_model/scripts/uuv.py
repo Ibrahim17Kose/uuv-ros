@@ -20,8 +20,6 @@ class UUV:
         self.pub_states = rospy.Publisher('states', States, queue_size=1)
 
         self.dt = 0.001
-        self.th_gain = 0.026546960744430276  # TODO: Add th_gain to config file
-        self.th_tau = 0.05  # TODO: Add th_tau to config file
 
         self.states = {"eta": np.zeros(6), "nu": np.zeros(6), "eta_dot": np.zeros(6), "nu_dot": np.zeros(6)}
         self.current = {"N": 0, "E": 0, "D": 0}  # TODO: Add current to ROS params
@@ -77,13 +75,13 @@ class UUV:
 
     def propulsion(self, control_signal):
         K_inv = np.linalg.pinv(self.cfg["K"])
-        u = np.clip(np.matmul(K_inv, control_signal), -1540, 1540)  # TODO: Add saturation limits to config file
+        u = np.clip(np.matmul(K_inv, control_signal), self.cfg["thruster_lower_limit"], self.cfg["thruster_upper_limit"])
         
-        motor_ang_vel = np.sign(u) * np.sqrt(np.abs(u) / self.th_gain)  
+        motor_ang_vel = np.sign(u) * np.sqrt(np.abs(u) / self.cfg["thruster_gain"])  
 
         # FO Thruster
-        ref = self.th_gain * motor_ang_vel * abs(motor_ang_vel)
-        alpha = np.exp(- self.dt / self.th_tau)
+        ref = self.cfg["thruster_gain"] * motor_ang_vel * abs(motor_ang_vel)
+        alpha = np.exp(- self.dt / self.cfg["thruster_tau"])
         thrust = alpha * self.prev_thrust + (1 - alpha) * ref
         self.prev_thrust = thrust
 
@@ -128,22 +126,15 @@ class UUV:
         nu_r = self.states["nu"] - np.concatenate((nu_c, np.zeros(3)), axis=0)
         
         tau = self.propulsion(control_signal)
-        print(f"tau = {tau}")
         damping, coriolis_am = self.hydrodynamics(nu_r)
-        print(f"damping = {damping}")
-        print(f"coriolis_am = {coriolis_am}")
         coriolis_rb = self.rigid_body_dynamics()
-        print(f"coriolis_rb = {coriolis_rb}")
         g_n = self.hydrstatics()
-        print(f"g_n = {g_n}")
 
         self.states["eta_dot"] = self.kinematics()
         self.states["nu_dot"] = np.matmul(np.linalg.inv(self.cfg["M"]), (tau - coriolis_rb - coriolis_am - damping - g_n))
 
         self.states["eta"] = self.prev_states["eta"] + ((self.states["eta_dot"] + self.prev_states["eta_dot"]) / 2) * self.dt
         self.states["nu"] = self.prev_states["nu"] + ((self.states["nu_dot"] + self.prev_states["nu_dot"]) / 2) * self.dt
-        
-        print(self.states)
         
         self.prev_states = self.states
 

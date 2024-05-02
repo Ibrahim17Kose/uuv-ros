@@ -52,8 +52,11 @@ M_a:
 
 # Thruster Gain
 
-th_gain: 0.026546960744430276
-th_tau: 0.05
+thruster_gain: 0.026546960744430276
+thruster_tau: 0.05
+
+thruster_lower_limit: -1540
+thruster_upper_limit: 1540
 
 # Thruster allocation matrix
 
