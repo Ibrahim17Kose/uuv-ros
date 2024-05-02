@@ -1,0 +1,79 @@
+# Environment Config
+
+g: 9.82                 # m/s^2
+rho: 1028               # kg/m3
+
+# REXROV 2 Config
+
+m: 1862.87              # kg
+V: 1.83826              # m^3
+h: 1.6                  # m
+
+Ix: 525.39              # kg*m2
+Iy: 794.27              # kg*m2
+Iz: 691.23              # kg*m2
+
+width: 1.5              # m
+length: 2.6             # m
+height: 1.6             # m
+
+g_center:  [0, 0, 0]      # m (BODY [NED])
+b_center:  [0, 0, -0.3]   # m (BODY [NED])
+
+# Linear Drag
+
+linear_drag:
+    - Xu_l: 74.82      # Ns/m (Linear drag surge)
+    - Yv_l: 69.48      # Ns/m (Linear drag sway)
+    - Zw_l: 728.4      # Ns/m (Linear drag heave)
+    - Kp_l: 268.8      # Ns/m (Linear drag roll)
+    - Mq_l: 309.77     # Ns/m (Linear drag pitch)
+    - Nr_l: 105.0      # Ns/m (Linear drag yaw)
+
+# Quadratic Drag
+
+quadratic_drag:
+    - Xu_q: 748.82     # Ns^2/m^2 (Quadratic drag surge)
+    - Yv_q: 992.53     # Ns^2/m^2 (Quadratic drag sway)
+    - Zw_q: 1821.01    # Ns^2/m^2 (Quadratic drag heave)
+    - Kp_q: 672.0      # Ns^2/m^2 (Quadratic drag roll)
+    - Mq_q: 774.44     # Ns^2/m^2 (Quadratic drag pitch)
+    - Nr_q: 523.27     # Ns^2/m^2 (Quadratic drag yaw)
+
+# Added mass
+
+M_a:
+    - [ 779.79,  -6.8773, -103.32,   8.5426,  -165.54,  -7.8033 ]
+    - [-6.8773,     1222,   51.29,   409.44,  -5.8488,   62.726 ]
+    - [-103.32,    51.29,  3659.9,   6.1112,  -386.42,   10.774 ]
+    - [ 8.5426,   409.44,  6.1112,    534.9,  -10.027,   21.019 ]
+    - [-165.54,  -5.8488, -386.42,  -10.027,   842.69,  -1.1162 ]
+    - [-7.8033,   62.726,  10.775,   21.019,  -1.1162,   224.32 ]  
+
+# Thruster Gain
+
+th_gain: 0.026546960744430276
+th_tau: 0.05
+
+# Thruster allocation matrix
+
+K: 
+    - [                 0.0, 0.2588192276583895,                 0.0,                 0.0,   0.9063078136609996,  0.9063078136609996 ]
+    - [  0.9999999999999744,                0.0,  0.3826835895134471,  0.3826835895134471,   0.4226182046445928, -0.4226182046445928 ]
+    - [                 0.0, 0.9659257773733522,  0.9238794674182862, -0.9238794674182862,                  0.0,                 0.0 ]
+    - [-0.23729999999999393,                0.0, -0.6957355424885819, -0.6957355424885819, -0.10159741639656011, 0.10159741639656011 ]
+    - [                 0.0,  0.946145736358475, -0.7995252448269914,  0.7995253373805782,   0.2178763984041043,  0.2178763984041043 ]
+    - [  0.4877999999999876,                0.0,  0.3311744245549398, 0.33117433217493447,  -0.7638899192332406,  0.7638899192332406 ]
+
+# Vehicle Initial Coordinates [ENU]
+
+X_enu: 0        # Meter
+Y_enu: 0        # Meter
+Z_enu: -20      # Meter
+Roll_enu : 0    # Degree
+Pitch_enu: 0    # Degree
+Yaw_enu  : 0    # Degree
+
+# Simulation Parameters
+
+dt: 0.001
