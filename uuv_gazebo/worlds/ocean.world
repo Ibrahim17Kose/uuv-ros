@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+
+<sdf version="1.5">
+  <world name="ocean">
+
+    <physics name="default_physics" default="true" type="ode">
+        <max_step_size>0.001</max_step_size>
+        <real_time_factor>1</real_time_factor>
+        <real_time_update_rate>1000</real_time_update_rate>
+        <ode>
+        <solver>
+            <type>quick</type>
+            <iters>50</iters>
+            <sor>0.5</sor>
+        </solver>
+        </ode>
+    </physics>
+
+    <scene>
+      <sky>
+        <clouds>
+          <speed>12</speed>
+        </clouds>
+      </sky>
+      <shadows>1</shadows>
+      <!-- 
+      <fog>
+        <color>0.1 0.2 0.3 1.0</color>
+        <type>linear</type>
+        <density>1</density>
+        <start>-10</start>
+        <end>10</end>
+      </fog>
+      -->
+    </scene>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    
+    <model name="water">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+      <link name="water_link">
+
+        <visual name="water_visual">
+          <transparency>0.5</transparency>
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <box>
+              <size>1000 1000 0.01</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.2 0.2 0.4 1</ambient>
+            <diffuse>0.1 0.1 0.4 1</diffuse>
+            <specular>0.1 0.1 0.3 1</specular>
+            <emissive>0 0 0 1</emissive>
+          </material>
+        </visual>
+
+      </link>
+    </model>
+
+    <model name="ground">
+      <pose>0 0 -100 0 0 0</pose>
+      <static>true</static>
+      <link name="ground_link">
+
+        <visual name="ground_visual">
+            <cast_shadows>false</cast_shadows>
+            <geometry>
+                <box>
+                    <size>1000 1000 .1</size>
+                </box>
+            </geometry>
+        </visual>
+
+        <collision name="ground_collision">
+            <geometry>
+                <box>
+                    <size>1000 1000 .1</size>
+                </box>
+            </geometry>
+        </collision>
+
+      </link>
+    </model>
+
+  </world>
+</sdf>

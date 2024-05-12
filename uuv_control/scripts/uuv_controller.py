@@ -6,26 +6,34 @@ import numpy as np
 from yaml import safe_load
 
 from uuv_control import *
+from uuv_model.utils import *
 from uuv_msgs.msg import ControlSignal, ReferenceSignal, States
 
 
 class UUVController:
     def __init__(self, uuv_name: str = "rexrov2"):
+        rospy.init_node("uuv_controller", anonymous=True)
+
         self.uuv_name = uuv_name
+
         self.cfg = {}
         self.controller_type = None
         self.controller = None
         self.parse_config()
         
-        rospy.init_node("uuv_controller", anonymous=True)
-        self.rate = rospy.Rate(1000)
+        self.dt = self.cfg["dt"]
+        self.rate = rospy.Rate(1 / self.dt)
 
+        # Topics
+        self.states = {"eta": np.zeros(6), "nu": np.zeros(6)}
+        self.reference_signal = {"eta_ref": self.cfg["eta_0"], "nu_ref": self.cfg["nu_0"]}
+
+        # ROS
         rospy.Subscriber('reference_signal', ReferenceSignal, self.callback_reference_signal)
         rospy.Subscriber('states', States, self.callback_states)
         self.pub_control_signal = rospy.Publisher("control_signal", ControlSignal, queue_size=1)
 
-        self.states = {"eta": self.cfg["eta_0"], "nu": self.cfg["nu_0"], "eta_dot": np.zeros(6), "nu_dot": np.zeros(6)}
-        self.reference_signal = {"eta_ref": self.cfg["eta_0"], "nu_ref": self.cfg["nu_0"]}
+        rospy.loginfo("UUV CONTROLLER Node is Up ...")
 
     def parse_config(self):
         with open(rospkg.RosPack().get_path("uuv_model") + f"/config/{self.uuv_name}.yaml", 'r') as file:
@@ -33,20 +41,14 @@ class UUVController:
 
         with open(rospkg.RosPack().get_path("uuv_control") + f"/config/{self.uuv_name}.yaml", 'r') as file:
             self.cfg = safe_load(file)
-        
-        # Vehicle Coordinates [NED] Conversion
-        model_cfg["X_ned"] = model_cfg["Y_enu"]
-        model_cfg["Y_ned"] = model_cfg["X_enu"]
-        model_cfg["Z_ned"] = - model_cfg["Z_enu"]
-        model_cfg["Roll_ned"] = model_cfg["Roll_enu"]
-        model_cfg["Pitch_ned"] = - model_cfg["Pitch_enu"]
-        model_cfg["Yaw_ned"] = - model_cfg["Yaw_enu"] + 90
 
+        self.cfg["dt"] = model_cfg["dt"]
+        
         # Initial states
-        self.cfg["eta_0"] = [model_cfg["X_ned"], model_cfg["Y_ned"], model_cfg["Z_ned"],
-                             np.deg2rad(model_cfg["Roll_ned"]),
-                             np.deg2rad(model_cfg["Pitch_ned"]),
-                             np.deg2rad(model_cfg["Yaw_ned"])]
+        self.cfg["eta_0"] = enu2ned([model_cfg["X_enu"], model_cfg["Y_enu"], model_cfg["Z_enu"],
+                                     np.deg2rad(model_cfg["Roll_enu"]),
+                                     np.deg2rad(model_cfg["Pitch_enu"]),
+                                     np.deg2rad(model_cfg["Yaw_enu"])])
         self.cfg["nu_0"] = [0, 0, 0, 0, 0, 0]
 
         if not "controller_type" in self.cfg:
@@ -68,15 +70,14 @@ class UUVController:
             self.pub_control_signal.publish(msg)
             self.rate.sleep()
     
-    def callback_reference_signal(self, data):
-        self.reference_signal["eta_ref"] = data.eta_ref
-        self.reference_signal["nu_ref"] = data.nu_ref
+    def callback_reference_signal(self, msg):
+        self.reference_signal["eta_ref"] = enu2ned(msg.eta_ref)
+        self.reference_signal["nu_ref"] = enu2ned(msg.nu_ref)
     
-    def callback_states(self, data):
-        self.states["eta"] = data.eta
-        self.states["nu"] = data.nu
-        self.states["eta_dot"] = data.eta_dot
-        self.states["nu_dot"] = data.nu_dot
+    def callback_states(self, msg):
+        self.states["eta"] = enu2ned(msg.eta)
+        self.states["nu"] = enu2ned(msg.nu)
+
 
 if __name__ == '__main__':
     try:

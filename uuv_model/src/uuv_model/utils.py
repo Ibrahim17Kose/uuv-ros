@@ -90,4 +90,24 @@ def gvect(W, B, theta, phi, r_bg, r_bb):
          -(r_bg[1]*W-r_bb[1]*B) * cth * cphi + (r_bg[2]*W-r_bb[2]*B) * cth * sphi,
          (r_bg[2]*W-r_bb[2]*B) * sth + (r_bg[0]*W-r_bb[0]*B) * cth * cphi,
          -(r_bg[0]*W-r_bb[0]*B) * cth * sphi - (r_bg[1]*W-r_bb[1]*B) * sth]
-    return g
+    return np.array(g)
+
+def ned2enu(ned):
+    enu = np.zeros_like(ned)
+    enu[0] = ned[0]
+    enu[1] = - ned[1]
+    enu[2] = - ned[2]
+    enu[3] = ned[3]
+    enu[4] = - ned[4]
+    enu[5] = - ned[5]
+    return enu
+
+def enu2ned(enu):
+    ned = np.zeros_like(enu)
+    ned[0] = enu[0]
+    ned[1] = - enu[1]
+    ned[2] = - enu[2]
+    ned[3] = enu[3]
+    ned[4] = - enu[4]
+    ned[5] = - enu[5]
+    return ned

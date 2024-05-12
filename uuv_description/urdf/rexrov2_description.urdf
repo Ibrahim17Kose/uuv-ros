@@ -1,0 +1,182 @@
+<?xml version="1.0" ?>
+
+<robot name="proteo">
+    <gazebo>
+        <plugin name="uuv_gazebo_plugin" filename="libuuv_gazebo_plugin.so" />
+    </gazebo>
+
+    <!-- ============================= BASE =================================== -->
+    <link name="base">
+        
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1862.87"/>
+            <inertia ixx="525.39" ixy="1.44" ixz="33.41" iyy="794.20" iyz="2.6" izz="691.23"/>
+        </inertial>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://uuv_description/meshes/rexrov2/RexROV2_no_props.dae" scale="1 1 1"/>
+            </geometry>
+        </visual>
+
+        <!-- bottom plate -->
+        <collision>
+            <origin xyz="0 0 -0.75" rpy="0 0 0"/>
+            <geometry>
+                <box size="2.56 1.50 0.10"/>
+            </geometry>
+        </collision>
+
+        <!-- top plate -->
+        <collision>
+            <origin xyz="0 0 0.60" rpy="0 0 0"/>
+            <geometry>
+                <box size="2.56 1.50 0.40"/>
+            </geometry>
+        </collision>
+
+        <!-- left / right sides -->
+        <collision>
+            <origin xyz="-0.20 0.70 -0.15" rpy="0 0 0"/>
+            <geometry>
+                <box size="2.20 0.10 1.10"/>
+            </geometry>
+        </collision>
+        <collision>
+            <origin xyz="-0.20 -0.70 -0.15" rpy="0 0 0"/>
+            <geometry>
+                <box size="2.20 0.10 1.10"/>
+            </geometry>
+        </collision>
+
+    </link>
+
+    <!-- ============================= THRUSTER 0 =================================== -->
+    <link name="thruster_0">
+        
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://uuv_description/meshes/rexrov2/Propeller.dae" scale="1 1 1"/>
+            </geometry>
+        </visual>
+
+    </link>
+
+    <joint name="thruster_joint_0" type="fixed">
+
+        <origin xyz="0.4878 0 0.2373" rpy="0 0 ${90*0.0174532925}"/>
+        <parent link="base"/>
+        <child link="thruster_0"/>
+        <axis xyz="1 0 0"/>
+
+    </joint>
+
+    <!-- ============================= THRUSTER 1 =================================== -->
+    <link name="thruster_1">
+        
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://uuv_description/meshes/rexrov2/Propeller.dae" scale="1 1 1"/>
+            </geometry>
+        </visual>
+
+    </link>
+
+    <joint name="thruster_joint_1" type="fixed">
+
+        <origin xyz="-0.8217 0 0.589" rpy="0 ${-75*0.0174532925} 0"/>
+        <parent link="base"/>
+        <child link="thruster_1"/>
+        <axis xyz="1 0 0"/>
+
+    </joint>
+
+    <!-- ============================= THRUSTER 2 =================================== -->
+    <link name="thruster_2">
+        
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://uuv_description/meshes/rexrov2/Propeller.dae" scale="1 1 1"/>
+            </geometry>
+        </visual>
+
+    </link>
+
+    <joint name="thruster_joint_2" type="fixed">
+
+        <origin xyz="0.8654 -0.5322 0.5332" rpy="0 ${-67.5*0.0174532925} ${90*0.0174532925}"/>
+        <parent link="base"/>
+        <child link="thruster_2"/>
+        <axis xyz="1 0 0"/>
+
+    </joint>
+
+    <!-- ============================= THRUSTER 3 =================================== -->
+    <link name="thruster_3">
+        
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://uuv_description/meshes/rexrov2/Propeller.dae" scale="1 1 1"/>
+            </geometry>
+        </visual>
+
+    </link>
+
+    <joint name="thruster_joint_3" type="fixed">
+
+        <origin xyz="0.8654 0.5322 0.5332" rpy="0 ${67.5*0.0174532925} ${90*0.0174532925}"/>
+        <parent link="base"/>
+        <child link="thruster_3"/>
+        <axis xyz="1 0 0"/>
+
+    </joint>
+
+    <!-- ============================= THRUSTER 4 =================================== -->
+    <link name="thruster_4">
+        
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://uuv_description/meshes/rexrov2/Propeller.dae" scale="1 1 1"/>
+            </geometry>
+        </visual>
+
+    </link>
+
+    <joint name="thruster_joint_4" type="fixed">
+
+        <origin xyz="-0.7076 0.5129 0.2404" rpy="0 0 ${25*0.0174532925}"/>
+        <parent link="base"/>
+        <child link="thruster_4"/>
+        <axis xyz="1 0 0"/>
+
+    </joint>
+
+    <!-- ============================= THRUSTER 5 =================================== -->
+    <link name="thruster_5">
+        
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://uuv_description/meshes/rexrov2/Propeller.dae" scale="1 1 1"/>
+            </geometry>
+        </visual>
+
+    </link>
+
+    <joint name="thruster_joint_5" type="fixed">
+
+        <origin xyz="-0.7076 -0.5129 0.2404" rpy="0 0 ${-25*0.0174532925}"/>
+        <parent link="base"/>
+        <child link="thruster_5"/>
+        <axis xyz="1 0 0"/>
+
+    </joint>
+
+</robot>
