@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 3.4.1 commit date:2022-12-19, commit time:17:00, hash:55485cb379f7</authoring_tool>
+    </contributor>
+    <created>2023-01-14T19:05:28</created>
+    <modified>2023-01-14T19:05:28</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="Material_Base-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0.3 0.3 0.3 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.8 0.8 0.8 1</color>
+            </ambient>
+            <diffuse>
+              <color sid="diffuse">0.8 0.8 0.8 1</color>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.4 0.4 0.4 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">103</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Material_Tiles-effect">
+      <profile_COMMON>
+        <newparam sid="pool_tiles_jpg-surface">
+          <surface type="2D">
+            <init_from>pool_tiles_jpg</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="pool_tiles_jpg-sampler">
+          <sampler2D>
+            <source>pool_tiles_jpg-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0.1 1</color>
+            </emission>
+            <ambient>
+              <texture texture="pool_tiles_jpg-sampler" texcoord="UVMap"/>
+            </ambient>
+            <diffuse>
+              <texture texture="pool_tiles_jpg-sampler" texcoord="UVMap"/>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.4 0.4 0.4 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">103</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images>
+    <image id="pool_tiles_jpg" name="pool_tiles_jpg">
+      <init_from>pool_tiles.jpg</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="Material_Base-material" name="Material_Base">
+      <instance_effect url="#Material_Base-effect"/>
+    </material>
+    <material id="Material_Tiles-material" name="Material_Tiles">
+      <instance_effect url="#Material_Tiles-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="olympic_swimming_pool-mesh" name="olympic_swimming_pool">
+      <mesh>
+        <source id="olympic_swimming_pool-mesh-positions">
+          <float_array id="olympic_swimming_pool-mesh-positions-array" count="48">-25000 -12500 2600 25000 -12500 2600 -25000 -12500 100 25000 -12500 100 25000 12500 2600 25000 12500 100 -25000 12500 2600 -25000 12500 100 27000 14500 -400 -27000 14500 -400 27000 14500 2600 -27000 14500 2600 27000 -14500 -400 27000 -14500 2600 -27000 -14500 -400 -27000 -14500 2600</float_array>
+          <technique_common>
+            <accessor source="#olympic_swimming_pool-mesh-positions-array" count="16" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="olympic_swimming_pool-mesh-normals">
+          <float_array id="olympic_swimming_pool-mesh-normals-array" count="18">0 1 0 -1 0 0 0 -1 0 1 0 0 0 0 1 0 0 -1</float_array>
+          <technique_common>
+            <accessor source="#olympic_swimming_pool-mesh-normals-array" count="6" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="olympic_swimming_pool-mesh-map-0">
+          <float_array id="olympic_swimming_pool-mesh-map-0-array" count="168">13.68563 13.45473 13.68563 -14.89268 15.10811 13.45473 15.10811 13.45473 13.68563 -14.89268 15.10811 -14.89268 16.52208 -0.7189745 16.52208 -14.89268 17.94456 -0.7189745 17.94456 -0.7189745 16.52208 -14.89268 17.94456 -14.89268 15.10811 13.45473 15.10811 -14.89268 16.53059 13.45473 16.53059 13.45473 15.10811 -14.89268 16.53059 -14.89268 16.52208 13.45473 16.52208 -0.7189745 17.94456 13.45473 17.94456 13.45473 16.52208 -0.7189745 17.94456 -0.7189745 -0.4880706 13.45473 -0.4880706 -14.89268 13.68563 13.45473 13.68563 13.45473 -0.4880706 -14.89268 13.68563 -14.89268 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.612427 -13.73425 -15.8202 -13.73425 -16.94456 -14.89268 -16.94456 -14.89268 -15.8202 -13.73425 -15.8202 14.61316 -16.94456 -14.89268 -15.8202 14.61316 -16.94456 15.77159 -16.94456 15.77159 -15.8202 14.61316 -1.612427 14.61316 -16.94456 15.77159 -1.612427 14.61316 -0.4880706 15.77159 -0.4880706 15.77159 -1.612427 14.61316 -1.612427 -13.73425 -0.4880706 15.77159 -1.612427 -13.73425 -0.4880706 -14.89268 -0.4880706 -14.89268 -1.612427 -13.73425 -16.94456 -14.89268 0 0 0 0 0 0 0 0 0 0 0 0</float_array>
+          <technique_common>
+            <accessor source="#olympic_swimming_pool-mesh-map-0-array" count="84" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="olympic_swimming_pool-mesh-vertices">
+          <input semantic="POSITION" source="#olympic_swimming_pool-mesh-positions"/>
+        </vertices>
+        <triangles material="Material_Base-material" count="10">
+          <input semantic="VERTEX" source="#olympic_swimming_pool-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#olympic_swimming_pool-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#olympic_swimming_pool-mesh-map-0" offset="2" set="0"/>
+          <p>8 0 30 9 0 31 10 0 32 10 0 33 9 0 34 11 0 35 12 3 36 8 3 37 13 3 38 13 3 39 8 3 40 10 3 41 14 2 42 12 2 43 15 2 44 15 2 45 12 2 46 13 2 47 9 1 48 14 1 49 11 1 50 11 1 51 14 1 52 15 1 53 9 5 78 8 5 79 14 5 80 14 5 81 8 5 82 12 5 83</p>
+        </triangles>
+        <triangles material="Material_Tiles-material" count="18">
+          <input semantic="VERTEX" source="#olympic_swimming_pool-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#olympic_swimming_pool-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#olympic_swimming_pool-mesh-map-0" offset="2" set="0"/>
+          <p>0 0 0 1 0 1 2 0 2 2 0 3 1 0 4 3 0 5 1 1 6 4 1 7 3 1 8 3 1 9 4 1 10 5 1 11 4 2 12 6 2 13 5 2 14 5 2 15 6 2 16 7 2 17 6 3 18 0 3 19 7 3 20 7 3 21 0 3 22 2 3 23 2 4 24 3 4 25 7 4 26 7 4 27 3 4 28 5 4 29 4 4 54 1 4 55 13 4 56 13 4 57 1 4 58 0 4 59 13 4 60 0 4 61 15 4 62 15 4 63 0 4 64 6 4 65 15 4 66 6 4 67 11 4 68 11 4 69 6 4 70 4 4 71 11 4 72 4 4 73 10 4 74 10 4 75 4 4 76 13 4 77</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="olympic_swimming_pool" name="olympic_swimming_pool" type="NODE">
+        <matrix sid="transform">0.001 0 0 0 0 0.001 0 0 0 0 0.001 -2.5 0 0 0 1</matrix>
+        <instance_geometry url="#olympic_swimming_pool-mesh" name="olympic_swimming_pool">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="Material_Base-material" target="#Material_Base-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="Material_Tiles-material" target="#Material_Tiles-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>
