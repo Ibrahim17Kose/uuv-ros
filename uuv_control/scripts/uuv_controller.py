@@ -5,7 +5,7 @@ import rospkg
 import numpy as np
 from yaml import safe_load
 
-from uuv_control import *
+from uuv_control.controllers import controller_list
 from uuv_model.utils import *
 from uuv_msgs.msg import ControlSignal, ReferenceSignal, States
 

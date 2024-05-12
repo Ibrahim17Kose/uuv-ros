@@ -7,7 +7,6 @@ from yaml import safe_load
 
 from uuv_model.utils import *
 from uuv_msgs.msg import ControlSignal, States
-from std_msgs.msg import Float64MultiArray
 from geometry_msgs.msg import Wrench, Vector3
 
 
