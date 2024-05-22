@@ -10,8 +10,8 @@ class MimoNonlinearPid:
     def __init__(self, cfg: dict):
         self.cfg = cfg
 
-        self.prev_integral = np.zeros(6)
-        self.prev_error = np.zeros(6)
+        self.prev_integral = np.zeros(self.cfg["thruster_num"])
+        self.prev_error = np.zeros(self.cfg["thruster_num"])
         
         self.eta_dot = np.zeros(6)
         self.last_eta = np.zeros(6)

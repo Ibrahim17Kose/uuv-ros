@@ -1,0 +1,91 @@
+# Environment Config
+
+g: 9.82                 # m/s^2
+rho: 1028               # kg/m3
+
+# BLUEROV 2 Config
+
+m: 13.5                 # kg
+V: 0.0134               # m^3
+h: 0.38                 # m
+
+Ix: 0.26                # kg*m2
+Iy: 0.23                # kg*m2
+Iz: 0.37                # kg*m2
+
+width: 0.58             # m
+length: 0.46            # m
+height: 0.38            # m
+
+g_center:  [0, 0, 0]      # m (BODY [NED])
+b_center:  [0, 0, -0.01]  # m (BODY [NED])
+
+# Linear Drag
+
+linear_drag:
+    - Xu_l: 13.7       # Ns/m (Linear drag surge)
+    - Yv_l: 0.0        # Ns/m (Linear drag sway)
+    - Zw_l: 33.0       # Ns/m (Linear drag heave)
+    - Kp_l: 0.0        # Ns/m (Linear drag roll)
+    - Mq_l: 0.8        # Ns/m (Linear drag pitch)
+    - Nr_l: 0.0        # Ns/m (Linear drag yaw)
+
+# Quadratic Drag
+
+quadratic_drag:
+    - Xu_q: 141.0      # Ns^2/m^2 (Quadratic drag surge)
+    - Yv_q: 217.0      # Ns^2/m^2 (Quadratic drag sway)
+    - Zw_q: 190.0      # Ns^2/m^2 (Quadratic drag heave)
+    - Kp_q: 1.19       # Ns^2/m^2 (Quadratic drag roll)
+    - Mq_q: 0.47       # Ns^2/m^2 (Quadratic drag pitch)
+    - Nr_q: 1.5        # Ns^2/m^2 (Quadratic drag yaw)
+
+# Added Mass
+
+M_a:
+    - [     6.36,      0.0,      0.0,      0.0,      0.0,      0.0]
+    - [      0.0,     7.12,      0.0,      0.0,      0.0,      0.0]
+    - [      0.0,      0.0,    18.68,      0.0,      0.0,      0.0]
+    - [      0.0,      0.0,      0.0,    0.189,      0.0,      0.0]
+    - [      0.0,      0.0,      0.0,      0.0,    0.135,      0.0]
+    - [      0.0,      0.0,      0.0,      0.0,      0.0,    0.222]
+
+# Thruster Tau
+
+thruster_num: 8
+thruster_tau: 0.1
+
+# Thruster Allocation Matrix
+
+K: 
+    - [   0.7071,   0.7071,  -0.7071,  -0.7071,      0.0,      0.0,      0.0,      0.0]
+    - [  -0.7071,   0.7071,  -0.7071,   0.7071,      0.0,      0.0,      0.0,      0.0]
+    - [      0.0,      0.0,      0.0,      0.0,     -1.0,     -1.0,     -1.0,     -1.0]
+    - [      0.0,      0.0,      0.0,      0.0,    0.218,    0.218,   -0.218,   -0.218]
+    - [      0.0,      0.0,      0.0,      0.0,     0.12,    -0.12,     0.12,    -0.12]
+    - [  -0.1888,   0.1888,   0.1888,  -0.1888,      0.0,      0.0,      0.0,      0.0]
+
+# Control Allocation Matrix
+
+A:
+    - [ -1,  1,  0,  0,  0,  1]
+    - [ -1, -1,  0,  0,  0, -1]
+    - [  1,  1,  0,  0,  0, -1]
+    - [  1, -1,  0,  0,  0,  1]
+    - [  0,  0,  1, -1, -1,  0]
+    - [  0,  0,  1, -1,  1,  0]
+    - [  0,  0,  1,  1, -1,  0]
+    - [  0,  0,  1,  1,  1,  0]
+
+# Vehicle Initial Coordinates [ENU]
+
+X_enu: 0        # Meter
+Y_enu: 0        # Meter
+Z_enu: -20      # Meter
+Roll_enu : 0    # Degree
+Pitch_enu: 0    # Degree
+Yaw_enu  : 0    # Degree
+
+# Simulation Parameters
+
+dt: 0.001

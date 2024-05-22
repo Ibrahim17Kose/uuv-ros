@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 
 <robot name="proteo">
+
     <gazebo>
         <plugin name="uuv_gazebo_plugin" filename="libuuv_gazebo_plugin.so" />
     </gazebo>

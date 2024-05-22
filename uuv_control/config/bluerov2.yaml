@@ -1,0 +1,12 @@
+controller_type: "mimo_nl_pid"
+
+# TODO: Optimization for Bluerov2
+
+Kp: [0, 0, 0, 0, 0, 0, 0, 0]
+Ki: [0, 0, 0, 0, 0, 0, 0, 0]
+Kd: [0, 0, 0, 0, 0, 0, 0, 0]
+
+acc_fb_gain: 0
+
+lower_limit: -1
+upper_limit: 1

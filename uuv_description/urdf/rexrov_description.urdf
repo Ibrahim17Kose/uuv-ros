@@ -2,6 +2,10 @@
 
 <robot name="proteo">
 
+    <gazebo>
+        <plugin name="uuv_gazebo_plugin" filename="libuuv_gazebo_plugin.so" />
+    </gazebo>
+    
     <!-- ============================= BASE =================================== -->
     <link name="base">
 

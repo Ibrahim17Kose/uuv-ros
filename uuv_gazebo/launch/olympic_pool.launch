@@ -6,7 +6,7 @@
     <arg name="pitch" default="0.0"/>
     <arg name="yaw" default="0.0"/>
 
-    <arg name="namespace" default="rexrov2"/>
+    <arg name="namespace" default="bluerov2"/>
 
 	<env name="GAZEBO_MODEL_PATH" value="$(find uuv_gazebo)/models"/>
 
@@ -31,6 +31,6 @@
         <arg name="namespace" default="$(arg namespace)"/>
     </include>
 
-    <node name="uuv_model" pkg="uuv_model" type="uuv_model_gazebo.py" output="screen"/>
+    <node name="uuv_model" pkg="uuv_model" type="uuv_model_gazebo.py" output="screen" args="--uuv_name $(arg namespace)"/>
 
 </launch>

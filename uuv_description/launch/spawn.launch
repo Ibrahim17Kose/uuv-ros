@@ -7,14 +7,14 @@
     <arg name="pitch" default="0.0"/>
     <arg name="yaw" default="0.0"/>
 
-    <arg name="namespace" default="rexrov2"/>
+    <arg name="namespace" default="bluerov2"/>
 
     <arg name="urdf_file" default="$(find xacro)/xacro '$(find uuv_description)/urdf/$(arg namespace)_description.urdf'"/>
     <param name="robot_description" command="$(arg urdf_file)"/>
 
     <!-- Gazebo model spawner -->
     <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
-        args="-unpause -urdf -param robot_description -model $(arg namespace) -x $(arg x) -y $(arg y) -z $(arg z)"/>
+        args="-urdf -param robot_description -model $(arg namespace) -x $(arg x) -y $(arg y) -z $(arg z)"/>
         
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
         <param name="publish_frequency" type="double" value="30.0" />

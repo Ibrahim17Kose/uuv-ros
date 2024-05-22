@@ -40,7 +40,7 @@ quadratic_drag:
     - Mq_q: 774.44     # Ns^2/m^2 (Quadratic drag pitch)
     - Nr_q: 523.27     # Ns^2/m^2 (Quadratic drag yaw)
 
-# Added mass
+# Added Mass
 
 M_a:
     - [ 779.79,  -6.8773, -103.32,   8.5426,  -165.54,  -7.8033 ]
@@ -52,13 +52,14 @@ M_a:
 
 # Thruster Gain
 
+thruster_num: 6
 thruster_gain: 0.026546960744430276
 thruster_tau: 0.05
 
 thruster_lower_limit: -1540
 thruster_upper_limit: 1540
 
-# Thruster allocation matrix
+# Thruster Allocation Matrix
 
 K: 
     - [                 0.0, 0.2588192276583895,                 0.0,                 0.0,   0.9063078136609996,  0.9063078136609996 ]

@@ -43,6 +43,7 @@ class UUVController:
             self.cfg = safe_load(file)
 
         self.cfg["dt"] = model_cfg["dt"]
+        self.cfg["thruster_num"] = model_cfg["thruster_num"]
         
         # Initial states
         self.cfg["eta_0"] = enu2ned([model_cfg["X_enu"], model_cfg["Y_enu"], model_cfg["Z_enu"],

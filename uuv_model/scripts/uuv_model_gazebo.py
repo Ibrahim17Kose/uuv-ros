@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 import rospy
 import rospkg
 import numpy as np
@@ -8,6 +9,11 @@ from yaml import safe_load
 from uuv_model.utils import *
 from uuv_msgs.msg import ControlSignal, States
 from geometry_msgs.msg import Wrench, Vector3
+
+
+parser = argparse.ArgumentParser(description="UUV Model Gazebo Script")
+parser.add_argument("--uuv_name", default="rexrov2")
+args = parser.parse_args(rospy.myargv()[1:])
 
 
 class UUV:
@@ -27,11 +33,11 @@ class UUV:
         self.nu_dot = np.zeros(6)
         self.last_nu = np.zeros(6)
 
-        self.prev_thrust = np.zeros(6)
+        self.prev_thrust = np.zeros(self.cfg["thruster_num"])
 
         # Topics
         self.wrench = Wrench()
-        self.control_signal = np.zeros(6)
+        self.control_signal = np.zeros(self.cfg["thruster_num"])
         self.states = {"eta": np.zeros(6), "nu": np.zeros(6)}
         self.current = {"N": 0, "E": 0, "D": 0}  # TODO: Add current to ROS params
         
@@ -80,18 +86,31 @@ class UUV:
         return
 
     def propulsion(self, control_signal):
-        K_inv = np.linalg.pinv(self.cfg["K"])
-        u = np.clip(np.matmul(K_inv, control_signal), self.cfg["thruster_lower_limit"], self.cfg["thruster_upper_limit"])
+        # TODO: Object oriented thruster description 
+        if self.uuv_name == "rexrov2":
+            K_inv = np.linalg.pinv(self.cfg["K"])
+            u = np.clip(np.matmul(K_inv, control_signal), self.cfg["thruster_lower_limit"], self.cfg["thruster_upper_limit"])
+            
+            motor_ang_vel = np.sign(u) * np.sqrt(np.abs(u) / self.cfg["thruster_gain"])  
+            ref = self.cfg["thruster_gain"] * motor_ang_vel * abs(motor_ang_vel)
+
+            # FO Thruster
+            alpha = np.exp(- self.dt / self.cfg["thruster_tau"])
+            thrust = alpha * self.prev_thrust + (1 - alpha) * ref
+            self.prev_thrust = thrust
+
+            tau = np.matmul(self.cfg["K"], thrust)
         
-        motor_ang_vel = np.sign(u) * np.sqrt(np.abs(u) / self.cfg["thruster_gain"])  
+        elif self.uuv_name == "bluerov2":
+            ref = (80 / (1 + np.exp(-4 * control_signal**3))) - 40
 
-        # FO Thruster
-        ref = self.cfg["thruster_gain"] * motor_ang_vel * abs(motor_ang_vel)
-        alpha = np.exp(- self.dt / self.cfg["thruster_tau"])
-        thrust = alpha * self.prev_thrust + (1 - alpha) * ref
-        self.prev_thrust = thrust
+            # FO Thruster
+            alpha = np.exp(- self.dt / self.cfg["thruster_tau"])
+            thrust = alpha * self.prev_thrust + (1 - alpha) * ref
+            self.prev_thrust = thrust
 
-        tau = np.matmul(self.cfg["K"], thrust)
+            tau = np.matmul(self.cfg["K"], thrust)
+
         return tau
 
     def hydrodynamics(self, nu_r):
@@ -154,7 +173,7 @@ class UUV:
 
 if __name__ == '__main__':
     try:
-        uuv_model = UUV()
+        uuv_model = UUV(uuv_name=args.uuv_name)
         uuv_model.main()
     except rospy.ROSInterruptException:
         pass
