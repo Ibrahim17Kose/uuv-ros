@@ -16,3 +16,7 @@ venv.bak/
 
 # VSCode
 .vscode
+
+# Blender
+*.blend
+*.blend1
