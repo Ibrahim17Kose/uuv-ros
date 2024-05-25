@@ -9,7 +9,7 @@
 
     <arg name="namespace" default="bluerov2"/>
 
-    <arg name="urdf_file" default="$(find xacro)/xacro '$(find uuv_description)/urdf/$(arg namespace)_description.urdf'"/>
+    <arg name="urdf_file" default="$(find xacro)/xacro '$(find uuv_description)/urdf/$(arg namespace)_description.urdf.xacro'"/>
     <param name="robot_description" command="$(arg urdf_file)"/>
 
     <!-- Gazebo model spawner -->
