@@ -52,7 +52,6 @@ class MimoNonlinearPid:
             error[5] += 2 * np.pi
         
         np.set_printoptions(precision=4)
-        print(error)
 
         p = np.multiply(self.cfg["Kp"], error)
 

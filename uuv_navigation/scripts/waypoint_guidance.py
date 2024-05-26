@@ -27,15 +27,20 @@ class UUVGuidance:
         self.y_interpolator = PchipInterpolator(theta, self.cfg["Y_point"])
         self.z_interpolator = PchipInterpolator(theta, self.cfg["Z_point"])
 
+        self.x_dot_interpolator = self.x_interpolator.derivative()
+        self.y_dot_interpolator = self.y_interpolator.derivative()
+        self.z_dot_interpolator = self.z_interpolator.derivative()
+
         self.time_constant = 1
-        self.desired_speed = 0.4
         self.initial_speed = 0
 
         # Trajectory
-        self.x_trajectory = []
-        self.y_trajectory = []
-        self.z_trajectory = []
+        self.theta = [0]
         self.yaw_trajectory = None
+
+        self.x_trajectory = None
+        self.y_trajectory = None
+        self.z_trajectory = None
 
         # ROS
         self.pub_path = rospy.Publisher("path", Path, queue_size=1)
@@ -87,17 +92,21 @@ class UUVGuidance:
         i = 0
         h = self.dt
         th = 0
-        while th < 11:
-            self.x_trajectory.append(self.x_interpolator(th))
-            self.y_trajectory.append(self.y_interpolator(th))
-            self.z_trajectory.append(self.z_interpolator(th))
 
-            th += h * (self.initial_speed / np.sqrt(self.x_trajectory[i]**2 + self.y_trajectory[i]**2 + self.z_trajectory[i]**2))
+        while th < 11:
+            x_th = self.x_dot_interpolator(th)
+            y_th = self.y_dot_interpolator(th)
+            z_th = self.z_dot_interpolator(th)
+
+            th += h * (self.initial_speed / np.sqrt(x_th**2 + y_th**2 + z_th**2))
             self.initial_speed += h * (-self.initial_speed + self.cfg["desired_speed"]) / self.time_constant
 
             i += 1
-        self.x_trajectory = np.array(self.x_trajectory)
-        self.y_trajectory = np.array(self.y_trajectory)
+            self.theta.append(th)
+        
+        self.x_trajectory = self.x_interpolator(self.theta)
+        self.y_trajectory = self.y_interpolator(self.theta)
+        self.z_trajectory = self.z_interpolator(self.theta)
 
         self.yaw_trajectory = np.zeros_like(self.x_trajectory)
 
