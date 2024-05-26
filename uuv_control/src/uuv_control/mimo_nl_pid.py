@@ -10,8 +10,8 @@ class MimoNonlinearPid:
     def __init__(self, cfg: dict):
         self.cfg = cfg
 
-        self.prev_integral = np.zeros(self.cfg["thruster_num"])
-        self.prev_error = np.zeros(self.cfg["thruster_num"])
+        self.prev_integral = np.zeros(6)
+        self.prev_error = np.zeros(6)
         
         self.eta_dot = np.zeros(6)
         self.last_eta = np.zeros(6)
@@ -46,6 +46,14 @@ class MimoNonlinearPid:
 
         error = eta - eta_ref
 
+        if error[5] > np.pi:
+            error[5] -= 2 * np.pi
+        elif error[5] < -np.pi:
+            error[5] += 2 * np.pi
+        
+        np.set_printoptions(precision=4)
+        print(error)
+
         p = np.multiply(self.cfg["Kp"], error)
 
         integral =  self.prev_integral + ((error + self.prev_error) / 2) * self.dt
@@ -55,7 +63,9 @@ class MimoNonlinearPid:
 
         pid = -(p + i + d) - self.cfg["acc_fb_gain"] * nu_dot
 
-        control_signal = np.clip(pid, self.cfg["lower_limit"], self.cfg["upper_limit"])
+        pid_signal = np.matmul(ned2body(states["eta"]), pid)
+
+        control_signal = np.clip(pid_signal, self.cfg["lower_limit"], self.cfg["upper_limit"])
         
         self.prev_error = error
         self.prev_integral = integral

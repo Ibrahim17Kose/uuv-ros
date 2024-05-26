@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 READING WAYPOINTS
 """
 
-with open(rospkg.RosPack().get_path("uuv_navigation") + f"/config/demo_waypoints.yaml", 'r') as file:
+with open(rospkg.RosPack().get_path("uuv_navigation") + f"/config/semi_olympic_waypoints.yaml", 'r') as file:
     cfg = safe_load(file)
 
 waypoints = np.array(cfg["waypoints"])
@@ -46,11 +46,11 @@ z_fine = z_interpolator(t_fine)
 TRAJECTORY GENERATION
 """
 
-time_constant = 1  # speed time constant
+time_constant = 5  # speed time constant
 desired_speed = cfg["desired_speed"]  # desired speed waypoint 1
 
 initial_speed = 0     # initial speed waypoint 0
-th = 0    # initial th-value waypoint 0
+th = 0.01    # initial th-value waypoint 0
 
 h = cfg["dt"]  # sampling time
 i = 0     # counter
@@ -58,15 +58,20 @@ i = 0     # counter
 x_th = []
 y_th = []
 z_th = []
-print(len(x))
+th_list = []
+speed_list = []
+
 while th < len(x)-1:
     # cubic polynominal between waypoints 0 and 1
     x_th.append(x_interpolator(th))
     y_th.append(y_interpolator(th))
     z_th.append(z_interpolator(th))
 
-    th += h * (initial_speed / np.sqrt(x_th[i]**2 + y_th[i]**2 + z_th[i]**2))  # theta dynamics
+    th += h * (initial_speed / np.sqrt(x_th[i]**2 + y_th[i]**2))  # theta dynamics
     initial_speed += h * (-initial_speed + desired_speed) / time_constant  # speed dynamics
+    
+    speed_list.append(initial_speed)
+    th_list.append(th)
 
     i += 1
 
@@ -95,8 +100,19 @@ ax3.legend()
 
 time = np.arange(0, len(x_th)*h, h)
 
-fig2, (ax1, ax2, ax3) = plt.subplots(3)
-fig2.suptitle("Path Time Interpolation")
+fig2, (ax1, ax2) = plt.subplots(2)
+fig2.suptitle("Speed U_d(t) and Path variable as a function of time t")
+
+ax1.plot(time, np.ones(len(time)) * desired_speed)
+ax1.plot(time, speed_list)
+ax1.grid(True)
+
+ax2.plot(time, np.ones(len(time)) * (len(x)-1))
+ax2.plot(time, th_list)
+ax2.grid(True)
+
+fig3, (ax1, ax2, ax3) = plt.subplots(3)
+fig3.suptitle("Path Time Interpolation")
 
 ax1.plot(time, x_th)
 ax1.set(ylabel="X")

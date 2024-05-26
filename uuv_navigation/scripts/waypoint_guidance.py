@@ -10,6 +10,7 @@ from uuv_msgs.msg import ReferenceSignal
 from nav_msgs.msg import Path
 from geometry_msgs.msg import PoseStamped
 
+
 class UUVGuidance:
     def __init__(self):
         rospy.init_node('uuv_guidance', anonymous=True)
@@ -41,7 +42,7 @@ class UUVGuidance:
         self.pub_reference_signal = rospy.Publisher("reference_signal", ReferenceSignal, queue_size=1)
 
     def parse_config(self):
-        with open(rospkg.RosPack().get_path("uuv_navigation") + f"/config/demo_waypoints.yaml", 'r') as file:
+        with open(rospkg.RosPack().get_path("uuv_navigation") + f"/config/semi_olympic_waypoints.yaml", 'r') as file:
             self.cfg = safe_load(file)
         
         self.cfg["X_point"] = np.array(self.cfg["waypoints"])[:, 0]

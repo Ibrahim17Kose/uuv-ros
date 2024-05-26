@@ -37,7 +37,7 @@ class UUV:
 
         # Topics
         self.wrench = Wrench()
-        self.control_signal = np.zeros(self.cfg["thruster_num"])
+        self.control_signal = np.zeros(6)
         self.states = {"eta": np.zeros(6), "nu": np.zeros(6)}
         self.current = {"N": 0, "E": 0, "D": 0}  # TODO: Add current to ROS params
         
@@ -102,7 +102,8 @@ class UUV:
             tau = np.matmul(self.cfg["K"], thrust)
         
         elif self.uuv_name == "bluerov2":
-            ref = (80 / (1 + np.exp(-4 * control_signal**3))) - 40
+            allocated_signal = np.clip(np.matmul(self.cfg["A"], control_signal), self.cfg["thruster_lower_limit"], self.cfg["thruster_upper_limit"])
+            ref = (80 / (1 + np.exp(-4 * allocated_signal**3))) - 40
 
             # FO Thruster
             alpha = np.exp(- self.dt / self.cfg["thruster_tau"])

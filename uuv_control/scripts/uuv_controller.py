@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 import rospy
 import rospkg
 import numpy as np
@@ -8,6 +9,11 @@ from yaml import safe_load
 from uuv_control.controllers import controller_list
 from uuv_model.utils import *
 from uuv_msgs.msg import ControlSignal, ReferenceSignal, States
+
+
+parser = argparse.ArgumentParser(description="UUV Model Gazebo Script")
+parser.add_argument("--uuv_name", default="rexrov2")
+args = parser.parse_args(rospy.myargv()[1:])
 
 
 class UUVController:
@@ -82,7 +88,7 @@ class UUVController:
 
 if __name__ == '__main__':
     try:
-        uuv_controller = UUVController()
+        uuv_controller = UUVController(uuv_name=args.uuv_name)
         uuv_controller.main()
     except rospy.ROSInterruptException:
         pass
