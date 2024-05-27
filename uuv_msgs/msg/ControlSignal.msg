@@ -1,3 +1,3 @@
 # Vehicle control signal msg
 
-float64[] data
+float64[6] data
