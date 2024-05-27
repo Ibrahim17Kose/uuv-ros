@@ -18,8 +18,6 @@ include_directories(
 )
 
 catkin_install_python(PROGRAMS
-     src/uuv_estimation/ekf_base.py
-     src/uuv_estimation/ekf_position_velocity.py
      src/uuv_estimation/estimator.py
      src/uuv_estimation/kalman_base.py
      src/uuv_estimation/uuv_kalman.py
