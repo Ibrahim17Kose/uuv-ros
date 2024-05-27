@@ -1,0 +1,30 @@
+# Camera
+
+camera:
+  - mean: 0.0
+  - std_dev: 0.0002
+
+
+# DVL
+
+dvl:
+  - mean: 0.0
+  - std_dev: 0.0002
+
+# IMU
+
+imu:
+  - mean: 0.0
+  - std_dev: 0.0002
+
+# Pressure
+
+pressure:
+  - mean: 0.0
+  - std_dev: 0.0002
+
+# Sonar
+
+sonar:
+  - mean: 0.0
+  - std_dev: 0.0002
