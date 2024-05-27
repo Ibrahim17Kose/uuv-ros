@@ -1,0 +1,3 @@
+<launch>
+    <node name="uuv_estimation" pkg="uuv_estimation" type="estimator.py" output="screen"/>
+</launch>
