@@ -31,7 +31,7 @@
 
     </link>
 
-    <!-- ============================= MANIPULATOR 1.4124 kg =================================== 
+    <!-- ============================= MANIPULATOR 1.4124 kg =================================== -->
     <link name="manipulator_base_footprint" />
 
     <joint name="manipulator_base_footprint_joint" type="fixed">
@@ -47,6 +47,6 @@
     <xacro:alpha_urdf parent="manipulator_base_footprint" prefix="manipulator_"
       description_package="uuv_description">
       <origin xyz="0 0 0" rpy="0 0 0" />
-    </xacro:alpha_urdf> -->
+    </xacro:alpha_urdf> 
     
 </robot>

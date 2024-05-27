@@ -221,6 +221,12 @@
       </inertial>
     </link>
 
+    <gazebo>
+      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <robotNamespace>/manipulator</robotNamespace>
+      </plugin>
+    </gazebo>
+
     <joint name="${prefix}base_joint" type="fixed">
       <xacro:insert_block name="origin" />
       <parent link="${parent}" />
@@ -241,6 +247,16 @@
       <limit effort="9.0" lower="0.0" upper="6.10" velocity="0.5" />
     </joint>
 
+    <transmission name="transmission_axis_e">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}axis_e">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="axis_e_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
     <joint name="${prefix}axis_d" type="revolute">
       <parent link="${prefix}m2_1_1_link" />
       <child link="${prefix}m2_joint_link" />
@@ -250,6 +266,16 @@
       <limit effort="9.0" lower="-3.49" upper="3.49" velocity="0.5" />
     </joint>
 
+    <transmission name="transmission_axis_d">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}axis_d">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="axis_d_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
     <joint name="${prefix}axis_c" type="revolute">
       <parent link="${prefix}m2_joint_link" />
       <child link="${prefix}m2_1_2_link" />
@@ -258,6 +284,16 @@
       <limit effort="9.0" lower="0.0" upper="3.22" velocity="0.5" />
     </joint>
 
+    <transmission name="transmission_axis_c">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}axis_c">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="axis_c_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
     <joint name="${prefix}axis_b" type="revolute">
       <parent link="${prefix}m2_1_2_link" />
       <child link="${prefix}m1_link" />
@@ -265,6 +301,16 @@
       <axis xyz="0 0 -1" />
       <limit effort="9.0" lower="0.0" upper="3.22" velocity="0.5" />
     </joint>
+
+    <transmission name="transmission_axis_b">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${prefix}axis_b">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="axis_b_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
 
     <joint name="${prefix}ee_joint" type="fixed">
       <origin rpy="0 0 0" xyz="0 0 0.09975" />

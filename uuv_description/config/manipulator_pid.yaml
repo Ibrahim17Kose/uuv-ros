@@ -1,0 +1,34 @@
+manipulator:
+    joint_state_controller:
+        type: joint_state_controller/JointStateController
+        publish_rate: 1000  
+
+    manipulator_axis_e_controller:
+        type: effort_controllers/JointPositionController
+        joint: manipulator_axis_e
+        pid: {p: 10.0, i: 0.05, d: 0.5}
+
+    manipulator_axis_d_controller:
+        type: effort_controllers/JointPositionController
+        joint: manipulator_axis_d
+        pid: {p: 10.0, i: 0.05, d: 0.5}
+
+    manipulator_axis_c_controller:
+        type: effort_controllers/JointPositionController
+        joint: manipulator_axis_c
+        pid: {p: 10.0, i: 0.05, d: 0.5}
+
+    manipulator_axis_b_controller:
+        type: effort_controllers/JointPositionController
+        joint: manipulator_axis_b
+        pid: {p: 5.0, i: 0.01, d: 0.1}
+
+    manipulator_standard_jaws_rs1_130_joint_controller:
+        type: effort_controllers/JointPositionController
+        joint: manipulator_standard_jaws_rs1_130_joint
+        pid: {p: 5.0, i: 0.0, d: 0.1}
+
+    manipulator_standard_jaws_rs1_139_joint_controller:
+        type: effort_controllers/JointPositionController
+        joint: manipulator_standard_jaws_rs1_139_joint
+        pid: {p: 5.0, i: 0.0, d: 0.1}

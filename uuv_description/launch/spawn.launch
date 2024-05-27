@@ -15,7 +15,16 @@
     <!-- Gazebo model spawner -->
     <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
         args="-urdf -param robot_description -model $(arg namespace) -x $(arg x) -y $(arg y) -z $(arg z)"/>
-        
+    
+    <rosparam file="$(find uuv_description)/config/manipulator_pid.yaml" command="load"/>
+    
+    <node pkg="controller_manager" type="spawner" name="controller_spawner" respawn="false"
+          output="screen" ns="/manipulator" args="joint_state_controller
+          manipulator_axis_e_controller manipulator_axis_d_controller
+          manipulator_axis_c_controller manipulator_axis_b_controller
+          manipulator_standard_jaws_rs1_130_joint_controller
+          manipulator_standard_jaws_rs1_139_joint_controller "/>
+    
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
         <param name="publish_frequency" type="double" value="30.0" />
     </node>
